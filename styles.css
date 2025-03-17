@@ -20,7 +20,22 @@ body {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   padding: 0.94rem;
-  margin: 0.63rem;
-  max-width: 12.5rem;
+  width: 100%; /* Makes cards fill grid columns */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(12.5rem, 1fr)
+  ); /* 200px min, equal columns */
+  gap: 1.25rem; /* 20px */
+  padding: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
 }

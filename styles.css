@@ -39,3 +39,10 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   }
 }
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #666;
+  padding: 2rem;
+}

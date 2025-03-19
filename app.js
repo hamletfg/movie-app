@@ -4,6 +4,10 @@ const popularMoviesContainer = document.getElementById("popular-movies");
 
 async function fetchAndRenderMovies() {
   try {
+    // Show loading while movies populate
+    popularMoviesContainer.innerHTML =
+      '<p class="loading">Loading movies... 🍿</p>';
+
     // Fetch popular movies
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`

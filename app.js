@@ -1,7 +1,12 @@
-// app.js
+// Constants & config
 const API_KEY = "ecb4a172095ca019b424c1f14bb27d25";
-const popularMoviesContainer = document.getElementById("popular-movies");
 
+// DOM elements
+const popularMoviesContainer = document.getElementById("popular-movies");
+const searchInput = document.getElementById("search-input");
+const searchButton = document.getElementById("search-btn");
+
+// Functions
 async function fetchAndRenderMovies() {
   try {
     // Show loading while movies populate
@@ -33,6 +38,28 @@ async function fetchAndRenderMovies() {
   } catch (error) {
     console.error("🚨 Error fetching movies:", error);
     popularMoviesContainer.innerHTML = `<p>Oops! Failed to load movies. Please try again later.</p>`;
+  }
+}
+
+async function searchMovies(query) {
+  try {
+    // Show loading state
+    popularMoviesContainer.innerHTML = `<p class="loading">Searching... 🔍</p>`;
+
+    // Fetch movies matching the search query
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+    );
+    const data = await response.json();
+
+    //Render results (same as before)
+    popularMoviesContainer.innerHTML = "";
+    data.results.forEach((movie) => {
+      /* ...existing card code ... */
+    });
+  } catch (error) {
+    console.error("🚨 Search failed:", error);
+    popularMoviesContainer.innerHTML = `<p>Search failed. Try again!</p>`;
   }
 }
 

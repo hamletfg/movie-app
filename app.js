@@ -63,5 +63,19 @@ async function searchMovies(query) {
   }
 }
 
+// Trigger search on button click
+searchButton.addEventListener("click", () => {
+  const query = searchInput.value.trim();
+  if (query) searchMovies(query);
+});
+
+// Trigger search on Enter key
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const query = searchInput.value.trim();
+    if (query) searchMovies(query);
+  }
+});
+
 // Run on page load
 window.onload = fetchAndRenderMovies;

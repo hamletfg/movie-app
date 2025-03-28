@@ -1,28 +1,40 @@
-// Constants & config
+// TMDB API key
 const API_KEY = "ecb4a172095ca019b424c1f14bb27d25";
 
-// DOM elements
+// Constants (variables)
 const popularMoviesContainer = document.getElementById("popular-movies");
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-btn");
 
-// Functions
-async function fetchAndRenderMovies() {
+// Reusable Functions
+async function fetchMovies(url) {
   try {
-    // Show loading while movies populate
-    popularMoviesContainer.innerHTML =
-      '<p class="loading">Loading movies... 🍿</p>';
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Network error");
+    return await response.json();
+  } catch (error) {
+    throw new Error("Failed to fetch movies");
+  }
+}
 
-    // Fetch popular movies
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-    );
-    const data = await response.json();
+// Render Function
 
-    // Clear mock cards (if any)
+async function handleMovieFetch(url, query = "") {
+  try {
+    // Show loading state
+    popularMoviesContainer.innerHTML = '<p class="loading">Loading... 🍿</p>';
+
+    // Fetch data
+    const data = await fetchMovies(url);
+
+    // Handle no results
+    if (data.results.length === 0) {
+      popularMoviesContainer.innerHTML = `<p>No movies found for "${query}". Try again! 🔍</p>`;
+      return;
+    }
+
+    // Clear & render movies
     popularMoviesContainer.innerHTML = "";
-
-    // Create movie cards
     data.results.forEach((movie) => {
       const movieCard = document.createElement("div");
       movieCard.className = "movie-card";
@@ -36,46 +48,31 @@ async function fetchAndRenderMovies() {
       popularMoviesContainer.appendChild(movieCard);
     });
   } catch (error) {
-    console.error("🚨 Error fetching movies:", error);
-    popularMoviesContainer.innerHTML = `<p>Oops! Failed to load movies. Please try again later.</p>`;
+    console.error("🚨 Error:", error);
+    popularMoviesContainer.innerHTML = `<p>Oops! Something went wrong. 🛠️</p>`;
   }
 }
 
-async function searchMovies(query) {
-  try {
-    // Show loading state
-    popularMoviesContainer.innerHTML = `<p class="loading">Searching... 🔍</p>`;
-
-    // Fetch movies matching the search query
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
-    );
-    const data = await response.json();
-
-    //Render results (same as before)
-    popularMoviesContainer.innerHTML = "";
-    data.results.forEach((movie) => {
-      /* ...existing card code ... */
-    });
-  } catch (error) {
-    console.error("🚨 Search failed:", error);
-    popularMoviesContainer.innerHTML = `<p>Search failed. Try again!</p>`;
-  }
-}
-
-// Trigger search on button click
-searchButton.addEventListener("click", () => {
+// Event Listeners
+function handleSearch() {
   const query = searchInput.value.trim();
-  if (query) searchMovies(query);
-});
 
-// Trigger search on Enter key
-searchInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    const query = searchInput.value.trim();
-    if (query) searchMovies(query);
+  if (!query) {
+    popularMoviesContainer.innerHTML = `<p>Please type a movie title! 🎬</p>`;
+    return;
   }
+
+  const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`;
+  handleMovieFetch(searchUrl, query);
+}
+
+searchButton.addEventListener("click", handleSearch);
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleSearch();
 });
 
-// Run on page load
-window.onload = fetchAndRenderMovies;
+// Initial Load (Popular Movies)
+window.onload = () => {
+  const popularUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
+  handleMovieFetch(popularUrl);
+};

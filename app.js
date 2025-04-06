@@ -63,7 +63,7 @@ async function showMovieDetails(movieId) {
   try {
     // Fetch movie details + videos (for treailer)
     const detailsUrl =
-      "https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}";
+      "https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY};";
     const videosUrl =
       "https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}";
 

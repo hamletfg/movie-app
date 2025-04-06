@@ -62,10 +62,8 @@ async function handleMovieFetch(url, query = "") {
 async function showMovieDetails(movieId) {
   try {
     // Fetch movie details + videos (for treailer)
-    const detailsUrl =
-      "https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY};";
-    const videosUrl =
-      "https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}";
+    const detailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`;
+    const videosUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`;
 
     const [detailsResponse, videosResponse] = await Promise.all([
       fetchMovies(detailsUrl),

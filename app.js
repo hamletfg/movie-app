@@ -45,11 +45,42 @@ async function handleMovieFetch(url, query = "") {
         <h3>${movie.title}</h3>
         <p>⭐ ${movie.vote_average}/10</p>
       `;
+
+      // Click handler
+      movieCard.addEventListener("click", () => {
+        showMovieDetails(movie.id); // Pass movie ID to fetch details
+      });
+
       popularMoviesContainer.appendChild(movieCard);
     });
   } catch (error) {
     console.error("🚨 Error:", error);
     popularMoviesContainer.innerHTML = `<p>Oops! Something went wrong. 🛠️</p>`;
+  }
+}
+
+async function showMovieDetails(movieId) {
+  try {
+    // Fetch movie details + videos (for treailer)
+    const detailsUrl =
+      "https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}";
+    const videosUrl =
+      "https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}";
+
+    const [detailsResponse, videosResponse] = await Promise.all([
+      fetchMovies(detailsUrl),
+      fetchMovies(videosUrl),
+    ]);
+
+    const trailer = videosResponse.results.find(
+      (video) => video.type === "Trailer"
+    );
+
+    // Render details page
+    renderDetailsPage(detailsResponse, trailer);
+  } catch (error) {
+    console.error("🚨 Failed to load details:", error);
+    popularMoviesContainer.innerHTML = `<p>Couldn't load details. Try again!</p>`;
   }
 }
 

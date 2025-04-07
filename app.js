@@ -82,6 +82,37 @@ async function showMovieDetails(movieId) {
   }
 }
 
+function renderDetailsPage(movie, trailer) {
+  const modal = document.getElementById("details-modal");
+  const container = document.getElementById("details-container");
+
+  // Populate details
+  container.innerHTML = `
+    <h2>${movie.title}</h2>
+    <p>${movie.overview}</p>
+    <p>⭐ ${movie.vote_average}/10 (${movie.vote_count} votes)</p>
+    ${
+      trailer
+        ? `
+      <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/${trailer.key}"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+      `
+        : "<p>No trailer available 😢</p>"
+    }
+  `;
+
+  // Show modal
+  modal.classList.remove("hidden");
+
+  // Close modal when X is clicked
+  doclument.querySelector(".close").addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+}
+
 // Event Listeners
 function handleSearch() {
   const query = searchInput.value.trim();

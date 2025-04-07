@@ -42,7 +42,6 @@ body {
 }
 
 .modal {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -50,6 +49,9 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
+  display: flex; /* Center modal content */
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
@@ -58,10 +60,13 @@ body {
   padding: 2rem;
   max-width: 800px;
   border-radius: 0.5rem;
+  position: relative;
 }
 
 .close {
-  float: right;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   font-size: 2rem;
   cursor: pointer;
 }

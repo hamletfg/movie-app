@@ -108,7 +108,7 @@ function renderDetailsPage(movie, trailer) {
   modal.classList.remove("hidden");
 
   // Close modal when X is clicked
-  doclument.querySelector(".close").addEventListener("click", () => {
+  document.querySelector(".close").addEventListener("click", () => {
     modal.classList.add("hidden");
   });
 }

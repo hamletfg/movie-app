@@ -111,6 +111,32 @@ function renderDetailsPage(movie, trailer) {
   document.querySelector(".close").addEventListener("click", () => {
     modal.classList.add("hidden");
   });
+
+  // Save form handler
+  document.getElementById("save-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const rating = document.getElementById("rating").value;
+    const comment = document.getElementById("comment").value;
+
+    const savedMovie = {
+      id: movie.id,
+      title: movie.title,
+      poster: movie.poster_path,
+      rating,
+      comment,
+    };
+
+    saveToLocalStorage(savedMovie);
+    alert("Movie saved! 🎉");
+  });
+}
+
+// Utility function
+function saveToLocalStorage(movie) {
+  const savedMovies = JSON.parse(localStorage.getItem("savedMovies")) || [];
+  savedMovies.push(movie);
+  localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
 }
 
 // Event Listeners

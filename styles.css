@@ -75,6 +75,30 @@ body {
   display: none;
 }
 
+#save-form {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+#save-form div {
+  margin-bottom: 1rem;
+}
+
+#save-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+#save-form input,
+#save-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+}
+
 @media (min-width: 768px) {
   .movie-grid {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

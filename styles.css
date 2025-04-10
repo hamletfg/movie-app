@@ -104,6 +104,36 @@ body {
   margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
+/* Ensure pages/modal don't overlap */
+.container,
+#saved-movies-page,
+#details-modal {
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  display: none !important; /* Force override of other displays */
+}
+
+/* Saved Movies Page Styling */
+#saved-movies-page {
+  padding: 1rem;
+}
+
+.nav-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.nav-btn:hover {
+  background: #0056b3;
+}
+
 @media (min-width: 768px) {
   .movie-grid {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

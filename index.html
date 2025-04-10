@@ -15,6 +15,9 @@
       <input type="text" id="search-input" placeholder="Search movies..." />
       <button id="search-btn">Search</button>
 
+      <!-- Saved Movies Button -->
+      <button id="saved-movies-btn">📁 Saved Movies</button>
+
       <!-- Popular Movies Grid -->
       <div id="popular-movies" class="movie-grid">
         <!-- Temporary Mock Cards (for layout testing) -->
@@ -42,6 +45,13 @@
           <button type="submit">💾 Save Movie</button>
         </form>
       </div>
+    </div>
+
+    <!-- Saved Movies Page -->
+    <div id="saved-movies-page" class="hidden">
+      <button id="back-btn" class="nav-btn">← Back to Search</button>
+      <h2>Your Saved Movies 🎞️</h2>
+      <div id="saved-movies-grid" class="movie-grid"></div>
     </div>
 
     <script src="app.js"></script>

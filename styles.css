@@ -99,6 +99,11 @@ body {
   border-radius: 0.25rem;
 }
 
+#search-btn,
+#saved-movies-btn {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
 @media (min-width: 768px) {
   .movie-grid {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

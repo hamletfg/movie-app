@@ -5,6 +5,10 @@ const API_KEY = "ecb4a172095ca019b424c1f14bb27d25";
 const popularMoviesContainer = document.getElementById("popular-movies");
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-btn");
+const savedMoviesBtn = document.getElementById("saved-movies-btn");
+const savedMoviesPage = document.getElementById("saved-movies-page");
+const backBtn = document.getElementById("back-btn");
+const savedMoviesGrid = document.getElementById("saved-movies-grid");
 
 // Reusable Functions
 async function fetchMovies(url) {
@@ -17,7 +21,7 @@ async function fetchMovies(url) {
   }
 }
 
-// Render Function
+// Render Functions
 
 async function handleMovieFetch(url, query = "") {
   try {
@@ -139,6 +143,24 @@ function saveToLocalStorage(movie) {
   localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
 }
 
+// Saved Movies Renderer
+function renderSavedMovies() {
+  const savedMovies = JSON.parse(localStorage.getItem("savedMovies")) || [];
+  savedMoviesGrid.innerHTML = savedMovies
+    .map(
+      (movie) => `
+      <div class="movie-card">
+        <img src="https://image.tmdb.org/t/p.w200${movie.poster}"
+          alt="${movie.title} Poster">
+        <h3>${movie.title}</h3>
+        <p>⭐ ${movie.rating}/10</p>
+        <p>💬 ${movie.comment || "No comment"}</p>
+      </div>
+      `
+    )
+    .join("");
+}
+
 // Event Listeners
 function handleSearch() {
   const query = searchInput.value.trim();
@@ -162,3 +184,16 @@ window.onload = () => {
   const popularUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
   handleMovieFetch(popularUrl);
 };
+
+// Show Saved Movies Page
+savedMoviesBtn.addEventListener("click", () => {
+  document.querySelector(".container").classList.add("hidden");
+  savedMoviesPage.classList.remove("hidden");
+  renderSavedMovies();
+});
+
+//Return to Search Page
+backBtn.addEventListener("click", () => {
+  savedMoviesPage.classList.add("hidden");
+  document.querySelector(".container").classList.remove("hidden");
+});

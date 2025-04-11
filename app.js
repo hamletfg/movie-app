@@ -89,6 +89,14 @@ async function showMovieDetails(movieId) {
 function renderDetailsPage(movie, trailer) {
   const modal = document.getElementById("details-modal");
   const container = document.getElementById("details-container");
+  const ratingInput = document.getElementById("rating");
+  const commentInput = document.getElementById("comment");
+  const closeButton = document.querySelector(".close");
+  const saveForm = document.getElementById("save-form");
+
+  // Reset form fields
+  ratingInput.value = "";
+  commentInput.value = "";
 
   // Populate details
   container.innerHTML = `
@@ -112,28 +120,23 @@ function renderDetailsPage(movie, trailer) {
   modal.classList.remove("hidden");
 
   // Close modal when X is clicked
-  document.querySelector(".close").addEventListener("click", () => {
+  closeButton.onclick = () => {
     modal.classList.add("hidden");
-  });
+  };
 
   // Save form handler
-  document.getElementById("save-form").addEventListener("submit", (e) => {
+  saveForm.onsubmit = (e) => {
     e.preventDefault();
-
-    const rating = document.getElementById("rating").value;
-    const comment = document.getElementById("comment").value;
-
     const savedMovie = {
       id: movie.id,
       title: movie.title,
       poster: movie.poster_path,
-      rating,
-      comment,
+      rating: ratingInput.value,
+      comment: commentInput.value,
     };
-
     saveToLocalStorage(savedMovie);
-    alert("Movie saved! 🎉");
-  });
+    alert("Movie saved!");
+  };
 }
 
 // Utility function
@@ -150,7 +153,7 @@ function renderSavedMovies() {
     .map(
       (movie) => `
       <div class="movie-card">
-        <img src="https://image.tmdb.org/t/p.w200${movie.poster}"
+        <img src="https://image.tmdb.org/t/p/w200${movie.poster}"
           alt="${movie.title} Poster">
         <h3>${movie.title}</h3>
         <p>⭐ ${movie.rating}/10</p>
